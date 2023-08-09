@@ -71,6 +71,7 @@ nav {
 .EditEventPage,
 .AddEvent,
 .AddGuest,
+.AddFood,
 .SignupPage,
 .LoginPage {
   background: #5aa378;
@@ -98,6 +99,7 @@ nav {
 
 .EditEventPage form,
 .AddGuest form,
+.AddFood form,
 .AddEvent form,
 .SignupPage form,
 .LoginPage form {
@@ -106,13 +108,21 @@ nav {
   align-items: center;
 }
 
+.AddGuest form li,
+.AddFood form li {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+
 .AddGuest button,
 .AddEvent button {
   display: block;
 
 }
 
-.GuestCard {
+.GuestCard  {
   background-color: #dfeef9;
 }
 
@@ -122,3 +132,7 @@ nav {
   max-width: 80%; /* Ensures the image scales within its container */
   height: auto; /* Maintains the aspect ratio */
 }
+
+
+
+

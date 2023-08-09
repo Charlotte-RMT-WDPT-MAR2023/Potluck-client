@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 import AddGuest from "../components/AddGuest";
+import AddFood from "../components/AddFood";
 import GuestCard from "../components/GuestCard";
+import FoodCard from "../components/FoodCard";
 
 import eventsService from "../services/events.service";
 
@@ -58,6 +60,10 @@ function EventDetailsPage(props) {
       <AddGuest refreshEvent={getEvent} eventId={eventId} />          
 
       { event && event.guests.map((guest) => <GuestCard key={guest._id} {...guest} /> )} 
+
+      <AddFood refreshEvent={getEvent} eventId={eventId} />          
+
+      { event && event.food.map((food) => <FoodCard key={food._id} {...food} /> )} 
 
       <Link to={`/events/edit/${eventId}`}>
         <button>Edit Event</button>

@@ -1,95 +1,118 @@
 import React, { useState } from "react";
+import foodsService from "../services/foods.service";
+import { diet } from "../utils/diet";
+import { allergies } from "../utils/allergies";
 
-function AddFood() {
-  const [formData, setFormData] = useState({
-    meal: "",
-    mealAllergens: [],
-    mealDietary: [],
-  });
+function AddFood(props) {
+  const [meal, setMeal] = useState("");
+  const [allergyInfo, setAllergyInfo] = useState([]);
+  const [dietaryInfo, setDietaryInfo] = useState([]);
 
-  const allergenOptions = [
-    "Peanuts",
-    "Tree Nuts",
-    "Sesame",
-    "Milk",
-    "Shellfish",
-    "Fish",
-    "Eggs",
-    "Soy",
-    "Wheat",
-  ];
-  const dietaryOptions = [
-    "Vegan",
-    "Vegetarian",
-    "Gluten Free",
-    "Halal",
-    "Keto",
-    "Sugar Free",
-  ];
-
-  const handleCheckboxChange = (e) => {
-    const { name, value, checked } = e.target;
+  const handleDietaryChange = (e) => {
+    const { value, checked } = e.target;
     if (checked) {
-      setFormData({
-        ...formData,
-        [name]: [...formData[name], value], // Update the specific property based on name
-      });
+      setDietaryInfo((prevDietary) => [...prevDietary, value]);
     } else {
-      setFormData({
-        ...formData,
-        [name]: formData[name].filter((item) => item !== value),
-      });
+      setDietaryInfo((prevDietary) =>
+        prevDietary.filter((item) => item !== value)
+      );
+    }
+  };
+
+  const handleAllergyChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setAllergyInfo((prevAllergies) => [...prevAllergies, value]);
+    } else {
+      setAllergyInfo((prevAllergies) =>
+        prevAllergies.filter((item) => item !== value)
+      );
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    const { eventId } = props;
+
+    const requestBody = {
+      meal,
+      allergyInfo,
+      dietaryInfo,
+      eventId,
+    };
+
+    foodsService
+      .createFood(requestBody)
+      .then((response) => {
+        setMeal("");
+        setAllergyInfo([]);
+        setDietaryInfo([]);
+
+        props.refreshEvent();
+      })
+      .catch((error) => console.log(error));
   };
 
+
+
+
   return (
-    <form onSubmit={handleSubmit}>
+    <div className="AddFood">
       <h3>What will you be bringing?</h3>
-      <textarea
-        type="text"
-        name="meal"
-        value={formData.meal}
-        onChange={(e) => setFormData({ ...formData, meal: e.target.value })}
-      />
+      <form onSubmit={handleSubmit}>
+        <label>Meal:</label>
+        <input
+          type="text"
+          name="meal"
+          value={meal}
+          onChange={(e) => setMeal(e.target.value)}
+        />
 
-      <h3>Select Dietary Requirements</h3>
-      {dietaryOptions.map((diet) => (
-        <div key={diet}>
-          <label>
-            <input
-              type="checkbox"
-              name="mealDietary"
-              value={diet}
-              checked={formData.mealDietary.includes(diet)}
-              onChange={handleCheckboxChange}
-            />
-            {diet}
-          </label>
+      <label>Allergies:</label>
+      <div className="checkbox-grid">
+        <ul>
+          {allergies.map((name) => (
+            <li key={name} className="chekbox-item">
+              <div className="allergy-item">
+                <input
+                  type="checkbox"
+                  id={`custom-checkbox-${name}`}
+                  name={name}
+                  value={name}
+                  checked={allergyInfo.includes(name)}
+                  onChange={handleAllergyChange}
+                />
+                <label htmlFor={`custom-checkbox-${name}`}>{name}</label>
+              </div>
+            </li>
+          ))}
+        </ul>
         </div>
-      ))}
 
-      <h3>Select Allergens</h3>
-      {allergenOptions.map((allergen) => (
-        <div key={allergen}>
-          <label>
-            <input
-              type="checkbox"
-              name="mealAllergens"
-              value={allergen}
-              checked={formData.mealAllergens.includes(allergen)}
-              onChange={handleCheckboxChange}
-            />
-            {allergen}
-          </label>
-        </div>
-      ))}
-      <button type="submit">Submit</button>
-    </form>
+        <label>Dietary Restrictions:</label>
+        <div className="checkbox-grid">
+        <ul>
+          {diet.map((name) => (
+            <li key={name} className="chekbox-item">
+              <div className="diet-item">
+                <input
+                  type="checkbox"
+                  id={`custom-checkbox-${name}`}
+                  name={name}
+                  value={name}
+                  checked={dietaryInfo.includes(name)}
+                  onChange={handleDietaryChange}
+                />
+                <label htmlFor={`custom-checkbox-${name}`}>{name}</label>
+              </div>
+            </li>
+          ))}
+          </ul>
+          </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
   );
 }
 

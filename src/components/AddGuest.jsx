@@ -1,11 +1,35 @@
 import { useState } from "react";
 import guestsService from "../services/guests.service";
+import { diet } from "../utils/diet";
+import { allergies } from "../utils/allergies";
 
 function AddGuest(props) {
   const [name, setName] = useState("");
   const [plusOne, setPlusOne] = useState("");
-  const [allergyInfo, setAllergyInfo] = useState("");
-  const [dietaryInfo, setDietaryInfo] = useState("");
+  const [allergyInfo, setAllergyInfo] = useState([]);
+  const [dietaryInfo, setDietaryInfo] = useState([]);
+
+  const handleDietaryChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setDietaryInfo((prevDietary) => [...prevDietary, value]);
+    } else {
+      setDietaryInfo((prevDietary) =>
+        prevDietary.filter((item) => item !== value)
+      );
+    }
+  };
+
+  const handleAllergyChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setAllergyInfo((prevAllergies) => [...prevAllergies, value]);
+    } else {
+      setAllergyInfo((prevAllergies) =>
+        prevAllergies.filter((item) => item !== value)
+      );
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,8 +49,8 @@ function AddGuest(props) {
       .then((response) => {
         setName("");
         setPlusOne("");
-        setAllergyInfo("");
-        setDietaryInfo("");
+        setAllergyInfo([]); // Clear the allergyInfo array
+        setDietaryInfo([]);
 
         props.refreshEvent();
       })
@@ -54,21 +78,43 @@ function AddGuest(props) {
           onChange={(e) => setPlusOne(e.target.value)}
         />
 
-        <label>Allergy Info:</label>
-        <textarea
-          type="text"
-          name="allergyInfo"
-          value={allergyInfo}
-          onChange={(e) => setAllergyInfo(e.target.value)}
-        />
+        <label>Allergies:</label>
+        <ul>
+          {allergies.map((name) => (
+            <li key={name}>
+              <div className="allergy-item">
+                <input
+                  type="checkbox"
+                  id={`custom-checkbox-${name}`}
+                  name={name}
+                  value={name}
+                  checked={allergyInfo.includes(name)}
+                  onChange={handleAllergyChange}
+                />
+                <label htmlFor={`custom-checkbox-${name}`}>{name}</label>
+              </div>
+            </li>
+          ))}
+        </ul>
 
-        <label>Dietary Info:</label>
-        <textarea
-          type="text"
-          name="dietaryInfo"
-          value={dietaryInfo}
-          onChange={(e) => setDietaryInfo(e.target.value)}
-        />
+        <label>Dietary Restrictions:</label>
+        <ul>
+          {diet.map((name) => (
+            <li key={name}>
+              <div className="diet-item">
+                <input
+                  type="checkbox"
+                  id={`custom-checkbox-${name}`}
+                  name={name}
+                  value={name}
+                  checked={dietaryInfo.includes(name)}
+                  onChange={handleDietaryChange}
+                />
+                <label htmlFor={`custom-checkbox-${name}`}>{name}</label>
+              </div>
+            </li>
+          ))}
+        </ul>
 
         <button type="submit">Add Guest</button>
       </form>
