@@ -1,15 +1,13 @@
-import { Link, useNavigate } from "react-router-dom";
-import eventsService from "../services/events.service";
+import { Link } from "react-router-dom";
 import {
   Card,
   CardBody,
   CardTitle,
   CardText,
-  Button,
 } from "reactstrap";
 
 function EventCard({ title, date, time, location, description, _id, onEventDeleted }) {
-  const navigate = useNavigate();
+  
   
   //format date
   const eventDate = new Date(date);
@@ -21,15 +19,7 @@ function EventCard({ title, date, time, location, description, _id, onEventDelet
   const formattedDate = `${formattedDay}.${formattedMonth}.${year}`;
 
 
-  const deleteEvent = (eventId) => {
-    eventsService
-      .deleteEvent(eventId)
-      .then(() => {
-        onEventDeleted(eventId);
-        navigate("/events");
-      })
-      .catch((err) => console.log(err));
-  };
+  
 
   return (
     <Card className="text-center">
@@ -38,19 +28,9 @@ function EventCard({ title, date, time, location, description, _id, onEventDelet
           <h3>{title}</h3>
         </CardTitle>
         <CardText>
-          <h5>Date: {formattedDate} </h5>
-          <h5> Time: {time} </h5>
-          <h5> Location: {location}</h5>
-          <p>{description}</p>
+          <p>Date: {formattedDate} </p>
         </CardText>
-         <Button 
-          color="info"
-          tag={Link} to={`/events/${_id}`}>
-         Event Details
-        </Button>
-
-        <Button color="info"
-          onClick={() => deleteEvent(_id)}>Delete Event</Button>
+        
       </CardBody>
     </Card>
   );

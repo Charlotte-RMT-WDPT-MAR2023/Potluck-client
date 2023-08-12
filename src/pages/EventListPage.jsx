@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import AddEvent from "../components/AddEvent";
 import EventCard from "../components/EventCard";
 import eventsService from "../services/events.service";
 
 
 function EventListPage() {
   const [events, setEvents] = useState([]);
+
 
   const getAllEvents = () => {
   
@@ -20,12 +20,18 @@ function EventListPage() {
  getAllEvents();
   }, []);
 
+  
+  const handleEventDeleted = (deletedEventId) => {
+    setEvents(events.filter((event) => event._id !== deletedEventId));
+  };
+
   return (
     <div className="EventListPage">
-      <AddEvent refreshEvents={getAllEvents} />
 
       {events.map((event) => (
-        <EventCard key={event._id} {...event} />
+        <EventCard key={event._id} {...event} 
+          onEventDeleted={handleEventDeleted}
+        />
       ))}
     </div>
   );

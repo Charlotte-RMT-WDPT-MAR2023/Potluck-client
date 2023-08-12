@@ -5,13 +5,15 @@ import AddGuest from "../components/AddGuest";
 import AddFood from "../components/AddFood";
 import GuestCard from "../components/GuestCard";
 import FoodCard from "../components/FoodCard";
-
+import { Card, CardBody, CardTitle, CardText, Button } from "reactstrap";
 import eventsService from "../services/events.service";
 
 function EventDetailsPage(props) {
   const [event, setEvent] = useState(null);
   const { eventId } = useParams();
   const navigate = useNavigate();
+  const [showAddGuest, setShowAddGuest] = useState(false);
+  const [showAddFood, setShowAddFood] = useState(false);
 
   const getEvent = () => {
     eventsService
@@ -46,29 +48,59 @@ function EventDetailsPage(props) {
       .catch((err) => console.log(err));
   };
 
+  const toggleShowAddGuest = () => {
+    setShowAddGuest(!showAddGuest);
+  };
+
+  const toggleShowAddFood = () => {
+    setShowAddFood(!showAddFood);
+  };
+
   return (
     <div className="EventDetails">
       {event && (
-        <>
-          <h1>{formattedDate}</h1>
-          <h1>{event.time}</h1>
-          <h1>{event.location}</h1>
-          <h1>{event.description}</h1>
-        </>
+        <Card className="text-center">
+          <CardBody>
+            <CardTitle tag={Link} to={`/events/${event._id}`}>
+              <h3>{event.title}</h3>
+            </CardTitle>
+            <CardText>
+              <h5>Date: {formattedDate} </h5>
+              <h5> Time: {event.time} </h5>
+              <h5> Location: {event.location}</h5>
+              <p>{event.description}</p>
+            </CardText>
+
+            <Button color="info" onClick={toggleShowAddGuest}>
+              {showAddGuest ? "Hide Guest Form" : "Add Guest"}
+            </Button>
+
+            <Button color="info" onClick={toggleShowAddFood}>
+              {showAddFood ? "Hide Food Form" : "Add Food"}
+            </Button>
+
+            <Button
+              color="info"
+              onClick={() => navigate(`/events/edit/${eventId}`)}
+            >
+              Edit Event Details
+            </Button>
+
+            <Button color="info" onClick={deleteEvent}>
+              Delete Event
+            </Button>
+          </CardBody>
+        </Card>
       )}
 
-      <AddGuest refreshEvent={getEvent} eventId={eventId} />          
+      {showAddGuest && <AddGuest refreshEvent={getEvent} eventId={eventId} />}
 
-      { event && event.guests.map((guest) => <GuestCard key={guest._id} {...guest} /> )} 
+      {event &&
+        event.guests.map((guest) => <GuestCard key={guest._id} {...guest} />)}
 
-      <AddFood refreshEvent={getEvent} eventId={eventId} />          
+      {showAddFood && <AddFood refreshEvent={getEvent} eventId={eventId} />}
 
-      { event && event.food.map((food) => <FoodCard key={food._id} {...food} /> )} 
-
-      <Link to={`/events/edit/${eventId}`}>
-        <button>Edit Event</button>
-      </Link>
-      <button onClick={deleteEvent}>Delete Event</button>
+      {event && event.food.map((food) => <FoodCard key={food._id} {...food} />)}
     </div>
   );
 }

@@ -1,30 +1,48 @@
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
-import homeicon from '../assets/homeicon.png';
-import logout from '../assets/logout.png';
+import {
+  Navbar,
+  NavLink,
+  Container,
+} from "reactstrap";
 
-function Navbar() {
+function NavBar() {
   // Subscribe to the AuthContext to gain access to
   // the values from AuthContext.Provider `value` prop
   const { isLoggedIn, logOutUser } = useContext(AuthContext);
 
-  return (
-    <nav>
-      <Link to="/userProfile">
-      <img src={homeicon} alt="home" className="nav-icon"/>
-      </Link>
+  return (    
+    <Navbar className="bg-info" expand="lg">
+      <Container>
+
       
+        <NavLink tag={Link} to="/events">
+          <i aria-hidden={true} className="now-ui-icons ui-1_calendar-60"></i>
+        </NavLink>
 
-      {isLoggedIn && (
-        <>
-          
-          <img src={logout} alt="logout" className="nav-icon" onClick={logOutUser}/>
-          
-        </>
-      )}
+        <NavLink tag={Link} to="/userProfile">
+          <i aria-hidden={true} className="now-ui-icons users_single-02"></i>
+        </NavLink>
 
-      {/*!isLoggedIn && (
+        <NavLink tag={Link} to="/Settings">
+          <i
+            aria-hidden={true}
+            className="now-ui-icons ui-1_settings-gear-63"
+          ></i>
+        </NavLink>
+
+        {isLoggedIn && (
+          <>
+            <NavLink
+              alt="logout"
+              className="now-ui-icons arrows-1_minimal-right"
+              onClick={logOutUser}
+            />
+          </>
+        )}
+
+        {/*!isLoggedIn && (
         <>
           <Link to="/signup">
             {" "}
@@ -36,8 +54,9 @@ function Navbar() {
           </Link>
         </>
       )*/}
-    </nav>
+      </Container>
+    </Navbar>
   );
 }
 
-export default Navbar;
+export default NavBar;

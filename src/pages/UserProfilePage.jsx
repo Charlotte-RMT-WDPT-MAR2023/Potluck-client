@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import AddEvent from "../components/AddEvent";
-import EventCard from "../components/EventCard";
+import EventTopline from "../components/EventTopline";
 import eventsService from "../services/events.service";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
+import { Row, Col } from "reactstrap";
 
 
-function EventListPage() {
+function UserProfilePage() {
   const [events, setEvents] = useState([]);
 
   const getAllEvents = () => {
@@ -29,15 +30,15 @@ function EventListPage() {
     <span> Welcome {user && user.name}</span>
     <br></br>
     <br></br>
-    {events.map((event) => (
-        <EventCard key={event._id} {...event} />
-      ))}
-
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 50%)" }}>
+  {events.map((event) => (
+    <EventTopline key={event._id} {...event} />
+  ))}
+</div>
       <AddEvent refreshEvents={getAllEvents} />
 
-      
     </div>
   );
 }
 
-export default EventListPage;
+export default UserProfilePage;

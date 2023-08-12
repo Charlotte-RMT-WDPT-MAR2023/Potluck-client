@@ -1,3 +1,8 @@
+import "./assets/css/bootstrap.min.css";
+import "./assets/css/now-ui-kit.css";
+//import "./assets/css/now-ui-kit.min.css";
+//import "./assets/css/now-ui-kit.css.map";
+import "./assets/css/demo.css";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -8,6 +13,7 @@ import EditEventPage from "./pages/EditEventPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
+import Settings from "./pages/Settings";
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
 
@@ -37,6 +43,11 @@ function App() {
         <Route
           path="/events/edit/:eventId"
           element={ <IsPrivate> <EditEventPage /> </IsPrivate> } 
+        />
+
+<Route
+          path="/settings"
+          element={ <IsPrivate> <Settings /> </IsPrivate> } 
         />
         
         <Route path="/signup" element={<IsAnon> <SignupPage /> </IsAnon>} />

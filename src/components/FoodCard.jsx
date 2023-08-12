@@ -1,10 +1,24 @@
-function FoodCard({ meal, dietaryInfo, allergyInfo}) {
+import { Link } from "react-router-dom";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  CardText,
+} from "reactstrap";
+
+function FoodCard({ meal, dietaryInfo, allergyInfo, _id}) {
   return (
-    <div className="FoodCard card">
-      <h3>{meal}</h3>
-      <p>{dietaryInfo}</p>
-      <p>{allergyInfo}</p>
-    </div>
+    <Card className="text-center">
+      <CardBody>
+      <CardTitle tag={Link} to={`/events/${_id}`}>
+          <h3>{meal}</h3>
+        </CardTitle>
+        <CardText>
+          <h5>Dietary Info: {dietaryInfo} </h5>
+          <h5>Allergy Info: {allergyInfo} </h5>
+        </CardText>
+        </CardBody>
+    </Card>
   );
 }
 

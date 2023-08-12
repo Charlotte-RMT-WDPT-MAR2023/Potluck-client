@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import foodsService from "../services/foods.service";
+import { useState } from "react";
+import guestsService from "../services/guests.service";
 import { diet } from "../utils/diet";
 import { allergies } from "../utils/allergies";
 import { Card, CardBody, Button, FormGroup, Input } from "reactstrap";
 
-function AddFood(props) {
-  const [meal, setMeal] = useState("");
+function AddGuest(props) {
+  const [name, setName] = useState("");
+  const [plusOne, setPlusOne] = useState("");
   const [allergyInfo, setAllergyInfo] = useState([]);
   const [dietaryInfo, setDietaryInfo] = useState([]);
 
@@ -37,17 +38,19 @@ function AddFood(props) {
     const { eventId } = props;
 
     const requestBody = {
-      meal,
+      name,
+      plusOne,
       allergyInfo,
       dietaryInfo,
       eventId,
     };
 
-    foodsService
-      .createFood(requestBody)
+    guestsService
+      .createGuest(requestBody)
       .then((response) => {
-        setMeal("");
-        setAllergyInfo([]);
+        setName("");
+        setPlusOne("");
+        setAllergyInfo([]); // Clear the allergyInfo array
         setDietaryInfo([]);
 
         props.refreshEvent();
@@ -58,22 +61,32 @@ function AddFood(props) {
   return (
     <Card className="text-center">
       <CardBody>
-        <div className="AddFood">
-          <h3>What will you be bringing?</h3>
+        <div className="AddGuest">
+          <h3>Add New Guest</h3>
 
           <form onSubmit={handleSubmit}>
             <FormGroup>
-              <label>Meal:</label>
+              <label>Name</label>
               <Input
                 type="text"
-                name="meal"
-                value={meal}
-                onChange={(e) => setMeal(e.target.value)}
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </FormGroup>
 
             <FormGroup>
-              <label>Allergies:</label>
+              <label>Allowed to bring guests?</label>
+              <Input
+                type="text"
+                name="plusOne"
+                value={plusOne}
+                onChange={(e) => setPlusOne(e.target.value)}
+              />
+            </FormGroup>
+
+            <FormGroup>
+              <label>Allergies</label>
               <div className="checkbox-grid">
                 <ul style={{ display: "grid", gridTemplateColumns: "repeat(3, 30%)" }}>
                   {allergies.map((name) => (
@@ -98,7 +111,7 @@ function AddFood(props) {
             </FormGroup>
 
             <FormGroup>
-              <label>Dietary Restrictions:</label>
+              <label>Dietary Restrictions</label>
               <ul style={{ display: "grid", gridTemplateColumns: "repeat(3, 30%)" }}>
                 {diet.map((name) => (
                   <li key={name} className="chekbox-item">
@@ -117,8 +130,9 @@ function AddFood(props) {
                 ))}
               </ul>
             </FormGroup>
+
             <Button type="submit" color="info">
-              Submit
+              Add Guest
             </Button>
           </form>
         </div>
@@ -127,4 +141,4 @@ function AddFood(props) {
   );
 }
 
-export default AddFood;
+export default AddGuest;

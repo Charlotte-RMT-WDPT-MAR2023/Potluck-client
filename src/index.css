@@ -44,20 +44,17 @@ textarea {
 
 nav {
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   align-items: center;
-  padding: 10px 20px; 
-  
+  padding: 10px 20px;
 }
 
 .nav-icon {
-  width: 30px; 
+  width: 30px;
   height: auto;
 }
 
-
-
-.card {
+/*.card {
   width: 80%;
   padding: 10px;
   box-shadow: 0px 2px 3px grey;
@@ -65,10 +62,9 @@ nav {
   margin-bottom: 20px;
   background: #5aa378;
   border-radius: 4px;
-}
+} */
 
-
-.EditEventPage,
+/*.EditEventPage,
 .AddEvent,
 .AddGuest,
 .AddFood,
@@ -82,7 +78,7 @@ nav {
   margin-bottom: 20px;
   padding: 10px;
   border-radius: 4px;
-}
+} */
 
 .EditEventPage {
   background-color: rgb(239, 196, 88);
@@ -114,25 +110,16 @@ nav {
   flex-wrap: wrap;
 }
 
-
-
 .AddGuest button,
 .AddEvent button {
   display: block;
-
 }
 
-.GuestCard  {
+.GuestCard {
   background-color: #dfeef9;
 }
 
-
-
 .responsive-image {
   max-width: 80%; /* Ensures the image scales within its container */
-  height: auto; /* Maintains the aspect ratio */
+  max-height: 300px; /* Maintains the aspect ratio */
 }
-
-
-
-
