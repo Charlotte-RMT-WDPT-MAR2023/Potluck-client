@@ -2,11 +2,12 @@ import { useState } from "react";
 import guestsService from "../services/guests.service";
 import { Card, CardBody, Button, FormGroup, Input } from "reactstrap";
 
+
 function AddGuest(props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [plusOne, setPlusOne] = useState("");
-
+  const [errorMessage, setErrorMessage] = useState(""); 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,12 +24,18 @@ function AddGuest(props) {
     guestsService
       .createGuest(requestBody)
       .then((response) => {
+        // Clear input fields and error message on successful submission
         setName("");
         setPlusOne("");
-        setEmail(""); 
+        setEmail("");
+        setErrorMessage("");
         props.refreshEvent();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        // Set error message on failed submission
+        setErrorMessage("An error occurred. Please try again.");
+        console.log(error);
+      });
   };
 
   return (
@@ -39,9 +46,10 @@ function AddGuest(props) {
 
           <form onSubmit={handleSubmit}>
             <FormGroup>
-              <label>Name</label>
+              <label htmlFor="name">Name</label>
               <Input
                 type="text"
+                id="name"
                 name="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -49,9 +57,10 @@ function AddGuest(props) {
             </FormGroup>
 
             <FormGroup>
-              <label>Allowed to bring guests?</label>
+              <label htmlFor="plusOne">Allowed to bring guests?</label>
               <Input
                 type="text"
+                id="plusOne"
                 name="plusOne"
                 value={plusOne}
                 onChange={(e) => setPlusOne(e.target.value)}
@@ -59,17 +68,21 @@ function AddGuest(props) {
             </FormGroup>
 
             <FormGroup>
-              <label>Email address</label>
-              <p className="text-muted">Provide an email address for your guests to send an invite directly through Eatogetherly</p>
+              <label htmlFor="email">Email address</label>
+              <p className="text-muted">
+                Provide an email address for your guests to send an invite directly through Eatogetherly
+              </p>
               <Input
                 type="text"
+                id="email"
                 name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </FormGroup>
 
-    
+            {/* Display error message */}
+            {errorMessage && <p className="text-danger">{errorMessage}</p>}
 
             <Button type="submit" color="info">
               Add Guest

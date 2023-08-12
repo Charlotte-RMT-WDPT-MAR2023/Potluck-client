@@ -1,4 +1,4 @@
-// We are deconstructing the props object directly in the parentheses of the function
+
 function GuestCard({ name, plusOne, email, allergyInfo, dietaryInfo }) {
   return (
     <div className="GuestCard card">

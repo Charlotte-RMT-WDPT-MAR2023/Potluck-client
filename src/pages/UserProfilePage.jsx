@@ -4,7 +4,6 @@ import EventTopline from "../components/EventTopline";
 import eventsService from "../services/events.service";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
-import { Row, Col } from "reactstrap";
 
 
 function UserProfilePage() {

@@ -71,6 +71,8 @@ function EventDetailsPage(props) {
               <p>{event.description}</p>
             </CardText>
 
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 50%)", placeItems: "center" }}>
+
             <Button color="info" onClick={toggleShowAddGuest}>
               {showAddGuest ? "Hide Guest Form" : "Add Guest"}
             </Button>
@@ -83,19 +85,22 @@ function EventDetailsPage(props) {
               color="info"
               onClick={() => navigate(`/events/edit/${eventId}`)}
             >
-              Edit Event Details
+              Edit Details
             </Button>
 
             <Button color="info" onClick={deleteEvent}>
               Delete Event
             </Button>
+            </div>
           </CardBody>
         </Card>
       )}
 
       {showAddGuest && <AddGuest refreshEvent={getEvent} eventId={eventId} />}
+      
+      
 
-      {event &&
+      {event && 
         event.guests.map((guest) => <GuestCard key={guest._id} {...guest} />)}
 
       {showAddFood && <AddFood refreshEvent={getEvent} eventId={eventId} />}
