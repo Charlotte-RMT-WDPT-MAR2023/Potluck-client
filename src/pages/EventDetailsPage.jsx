@@ -71,36 +71,39 @@ function EventDetailsPage(props) {
               <p>{event.description}</p>
             </CardText>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 50%)", placeItems: "center" }}>
-
-            <Button color="info" onClick={toggleShowAddGuest}>
-              {showAddGuest ? "Hide Guest Form" : "Add Guest"}
-            </Button>
-
-            <Button color="info" onClick={toggleShowAddFood}>
-              {showAddFood ? "Hide Food Form" : "Add Food"}
-            </Button>
-
-            <Button
-              color="info"
-              onClick={() => navigate(`/events/edit/${eventId}`)}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 50%)",
+                placeItems: "center",
+              }}
             >
-              Edit Details
-            </Button>
+              <Button color="info" onClick={toggleShowAddGuest}>
+                {showAddGuest ? "Hide Guest Form" : "Add Guest"}
+              </Button>
 
-            <Button color="info" onClick={deleteEvent}>
-              Delete Event
-            </Button>
+              <Button color="info" onClick={toggleShowAddFood}>
+                {showAddFood ? "Hide Food Form" : "Add Food"}
+              </Button>
+
+              <Button
+                color="info"
+                onClick={() => navigate(`/events/edit/${eventId}`)}
+              >
+                Edit Details
+              </Button>
+
+              <Button color="info" onClick={deleteEvent}>
+                Delete Event
+              </Button>
             </div>
           </CardBody>
         </Card>
       )}
 
       {showAddGuest && <AddGuest refreshEvent={getEvent} eventId={eventId} />}
-      
-      
 
-      {event && 
+      {event &&
         event.guests.map((guest) => <GuestCard key={guest._id} {...guest} />)}
 
       {showAddFood && <AddFood refreshEvent={getEvent} eventId={eventId} />}
