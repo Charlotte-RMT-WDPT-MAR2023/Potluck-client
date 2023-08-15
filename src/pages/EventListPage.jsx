@@ -33,6 +33,8 @@ function EventListPage() {
           onEventDeleted={handleEventDeleted}
         />
       ))}
+
+      
     </div>
   );
 }

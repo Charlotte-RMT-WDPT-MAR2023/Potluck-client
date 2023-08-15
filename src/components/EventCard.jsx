@@ -43,6 +43,17 @@ function EventCard({ title, date, time, location, description, _id, onEventDelet
           <h5> Location: {location}</h5>
           <p>{description}</p>
         </CardText>
+        <CardTitle tag={Link} to={`/rsvp/${_id}`}>
+          <h3>RSVP</h3>
+        </CardTitle>
+
+        <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 50%)",
+                placeItems: "center",
+              }}
+            >
          <Button 
           color="info"
           tag={Link} to={`/events/${_id}`}>
@@ -51,6 +62,7 @@ function EventCard({ title, date, time, location, description, _id, onEventDelet
 
         <Button color="info"
           onClick={() => deleteEvent(_id)}>Delete Event</Button>
+     </div>
       </CardBody>
     </Card>
   );

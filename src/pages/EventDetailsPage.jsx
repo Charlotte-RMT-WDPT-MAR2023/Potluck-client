@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
 import AddGuest from "../components/AddGuest";
-import AddFood from "../components/AddFood";
 import GuestCard from "../components/GuestCard";
 import FoodCard from "../components/FoodCard";
 import { Card, CardBody, CardTitle, CardText, Button } from "reactstrap";
@@ -13,7 +12,7 @@ function EventDetailsPage(props) {
   const { eventId } = useParams();
   const navigate = useNavigate();
   const [showAddGuest, setShowAddGuest] = useState(false);
-  const [showAddFood, setShowAddFood] = useState(false);
+
 
   const getEvent = () => {
     eventsService
@@ -52,9 +51,7 @@ function EventDetailsPage(props) {
     setShowAddGuest(!showAddGuest);
   };
 
-  const toggleShowAddFood = () => {
-    setShowAddFood(!showAddFood);
-  };
+ 
 
   return (
     <div className="EventDetails">
@@ -79,11 +76,29 @@ function EventDetailsPage(props) {
               }}
             >
               <Button color="info" onClick={toggleShowAddGuest}>
-                {showAddGuest ? "Hide Guest Form" : "Add Guest"}
-              </Button>
+  {showAddGuest ? 
+    (
+    <>
+      <i aria-hidden={true} className="now-ui-icons ui-1_simple-delete"></i>
+      <br/>
+      Hide Guest Form
+    </>
+  )
+  :
+  (
+    <>
+      <i aria-hidden={true} className="now-ui-icons ui-1_simple-add"></i>
+      <br/>
+      Add Guest
+    </>
+  )  }
+</Button>
 
-              <Button color="info" onClick={toggleShowAddFood}>
-                {showAddFood ? "Hide Food Form" : "Add Food"}
+
+              <Button color="info" >
+              <i aria-hidden={true} className="now-ui-icons ui-1_send"></i>
+              <br/>
+              Send Invitations
               </Button>
 
               <Button
@@ -103,12 +118,14 @@ function EventDetailsPage(props) {
 
       {showAddGuest && <AddGuest refreshEvent={getEvent} eventId={eventId} />}
 
+      <h3>Guests</h3>
       {event &&
         event.guests.map((guest) => <GuestCard key={guest._id} {...guest} />)}
 
-      {showAddFood && <AddFood refreshEvent={getEvent} eventId={eventId} />}
-
+        <h3>Food</h3>
+   
       {event && event.food.map((food) => <FoodCard key={food._id} {...food} />)}
+
     </div>
   );
 }

@@ -75,7 +75,12 @@ function AddFood(props) {
             <FormGroup>
               <label>Allergies:</label>
               <div className="checkbox-grid">
-                <ul style={{ display: "grid", gridTemplateColumns: "repeat(3, 30%)" }}>
+                <ul
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, 30%)",
+                  }}
+                >
                   {allergies.map((name) => (
                     <div className="chekbox-item">
                       <div className="allergy-item">
@@ -99,19 +104,27 @@ function AddFood(props) {
 
             <FormGroup>
               <label>Dietary Restrictions:</label>
-              <ul style={{ display: "grid", gridTemplateColumns: "repeat(3, 30%)" }}>
-                {diet.map((name) => (
-                  <li key={name} className="chekbox-item">
+              <ul
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 30%)",
+                }}
+              >
+                {diet.map((dietItem) => (
+                  <li key={dietItem.name} className="chekbox-item">
                     <div className="diet-item">
                       <Input
                         type="checkbox"
-                        id={`custom-checkbox-${name}`}
-                        name={name}
-                        value={name}
-                        checked={dietaryInfo.includes(name)}
+                        id={`custom-checkbox-${dietItem.name}`}
+                        name={dietItem.name}
+                        value={dietItem.name}
+                        checked={dietaryInfo.includes(dietItem.name)}
                         onChange={handleDietaryChange}
                       />
-                      <label htmlFor={`custom-checkbox-${name}`}>{name}</label>
+                      <label htmlFor={`custom-checkbox-${dietItem.name}`}>
+                        <img src={dietItem.image} alt={dietItem.name} />
+                        {dietItem.name}
+                      </label>
                     </div>
                   </li>
                 ))}

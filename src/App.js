@@ -14,6 +14,7 @@ import UserProfilePage from "./pages/UserProfilePage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import Settings from "./pages/Settings";
+import Rsvp from "./pages/Rsvp";
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
 
@@ -48,6 +49,11 @@ function App() {
 <Route
           path="/settings"
           element={ <IsPrivate> <Settings /> </IsPrivate> } 
+        />
+
+<Route
+          path="/rsvp"
+          element={ <IsPrivate> <Rsvp /> </IsPrivate> } 
         />
         
         <Route path="/signup" element={<IsAnon> <SignupPage /> </IsAnon>} />
