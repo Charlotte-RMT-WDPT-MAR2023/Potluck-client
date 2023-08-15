@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../services/auth.service";
+import { Card, CardBody, CardTitle, CardText, FormGroup, Input, Button } from "reactstrap";
 
 function SignupPage(props) {
   const [email, setEmail] = useState("");
@@ -30,32 +31,42 @@ function SignupPage(props) {
   };
 
   return (
+    <Card className="text-center">
     <div className="SignupPage">
-      <h1>Sign Up</h1>
+
+     <CardBody>
+            <CardTitle>
+              <h3>Sign Up</h3>
+            </CardTitle>
+            <CardText>
+     
 
       <form onSubmit={handleSignupSubmit}>
+      <FormGroup>
         <label>Email:</label>
-        <input type="email" name="email" value={email} onChange={handleEmail} />
+        <Input type="email" name="email" value={email} onChange={handleEmail} />
 
         <label>Password:</label>
-        <input
+        <Input
           type="password"
           name="password"
           value={password}
           onChange={handlePassword}
         />
+        
 
         <label>Name:</label>
-        <input type="text" name="name" value={name} onChange={handleName} />
-
-        <button type="submit">Sign Up</button>
+        <Input type="text" name="name" value={name} onChange={handleName} />
+</FormGroup>
+        <Button className="btn-round" color="info" type="submit">Sign Up</Button>
       </form>
-
+</CardText>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-      <p>Already have account?</p>
-      <Link to={"/login"}> Login</Link>
+      <p>Already have an account?</p>  <Link to={"/login"}> Login</Link>
+      </CardBody>
     </div>
+    </Card>
   );
 }
 

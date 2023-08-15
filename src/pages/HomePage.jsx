@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Image from '../assets/homepage.jpg';
+import { Button } from "reactstrap";
 
 function HomePage() {
   return (
@@ -16,12 +17,12 @@ function HomePage() {
       
           <Link to="/signup">
             {" "}
-            <button>Sign Up</button>{" "}
+            <Button color="info">Sign Up</Button>{" "}
           </Link>
           <br></br>
           <Link to="/login">
             {" "}
-            <button>Login</button>{" "}
+            <Button color="info">Login</Button>{" "}
           </Link>
          
         

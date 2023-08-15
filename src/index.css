@@ -84,14 +84,8 @@ nav {
   background-color: rgb(239, 196, 88);
 }
 
-.SignupPage,
-.LoginPage {
-  background-color: #608dd5;
-}
 
-.LoginPage {
-  background-color: #94a7c8;
-}
+
 
 .EditEventPage form,
 .AddGuest form,
