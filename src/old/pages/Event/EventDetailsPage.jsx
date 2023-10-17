@@ -1,18 +1,17 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
-import AddGuest from "../components/AddGuest";
-import GuestCard from "../components/GuestCard";
-import FoodCard from "../components/FoodCard";
+import AddGuest from "../../components/Guests/AddGuest";
+import GuestCard from "../../components/Guests/GuestCard";
+import FoodCard from "../../components/Food/FoodCard";
 import { Card, CardBody, CardTitle, CardText, Button } from "reactstrap";
-import eventsService from "../services/events.service";
+import eventsService from "../../services/events.service";
 
 function EventDetailsPage(props) {
   const [event, setEvent] = useState(null);
   const { eventId } = useParams();
   const navigate = useNavigate();
   const [showAddGuest, setShowAddGuest] = useState(false);
-
 
   const getEvent = () => {
     eventsService
@@ -51,8 +50,6 @@ function EventDetailsPage(props) {
     setShowAddGuest(!showAddGuest);
   };
 
- 
-
   return (
     <div className="EventDetails">
       {event && (
@@ -76,36 +73,38 @@ function EventDetailsPage(props) {
               }}
             >
               <Button color="info" onClick={toggleShowAddGuest}>
-  {showAddGuest ? 
-    (
-    <>
-      <i aria-hidden={true} className="now-ui-icons ui-1_simple-delete"></i>
-      <br/>
-      Hide Guest Form
-    </>
-  )
-  :
-  (
-    <>
-      <i aria-hidden={true} className="now-ui-icons ui-1_simple-add"></i>
-      <br/>
-      Add Guest
-    </>
-  )  }
-</Button>
+                {showAddGuest ? (
+                  <>
+                    <i
+                      aria-hidden={true}
+                      className="now-ui-icons ui-1_simple-delete"
+                    ></i>
+                    <br />
+                    Hide Guest Form
+                  </>
+                ) : (
+                  <>
+                    <i
+                      aria-hidden={true}
+                      className="now-ui-icons ui-1_simple-add"
+                    ></i>
+                    <br />
+                    Add Guest
+                  </>
+                )}
+              </Button>
 
-
-              <Button color="info" >
-              <i aria-hidden={true} className="now-ui-icons ui-1_send"></i>
-              <br/>
-              Send Invitations
+              <Button color="info">
+                <i aria-hidden={true} className="now-ui-icons ui-1_send"></i>
+                <br />
+                Send Invitations
               </Button>
 
               <Button
                 color="info"
                 onClick={() => navigate(`/events/edit/${eventId}`)}
               >
-                Edit Details
+                Edit Event
               </Button>
 
               <Button color="info" onClick={deleteEvent}>
@@ -122,10 +121,9 @@ function EventDetailsPage(props) {
       {event &&
         event.guests.map((guest) => <GuestCard key={guest._id} {...guest} />)}
 
-        <h3>Food</h3>
-   
-      {event && event.food.map((food) => <FoodCard key={food._id} {...food} />)}
+      <h3>Food</h3>
 
+      {event && event.food.map((food) => <FoodCard key={food._id} {...food} />)}
     </div>
   );
 }

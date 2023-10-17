@@ -1,13 +1,12 @@
 import { useState } from "react";
-import guestsService from "../services/guests.service";
+import guestsService from "../../services/guests.service";
 import { Card, CardBody, Button, FormGroup, Input } from "reactstrap";
-
 
 function AddGuest(props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [plusOne, setPlusOne] = useState("");
-  const [errorMessage, setErrorMessage] = useState(""); 
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -70,7 +69,8 @@ function AddGuest(props) {
             <FormGroup>
               <label htmlFor="email">Email address</label>
               <p className="text-muted">
-                Provide an email address for your guests to send an invite directly through Eatogetherly
+                Provide an email address for your guests to send an invite
+                directly through Eatogetherly
               </p>
               <Input
                 type="text"

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import foodsService from "../services/foods.service";
-import { diet } from "../utils/diet";
-import { allergies } from "../utils/allergies";
+import foodsService from "../../services/foods.service";
+import { diet } from "../../utils/diet";
+import { allergies } from "../../utils/allergies";
 import { Card, CardBody, Button, FormGroup, Input } from "reactstrap";
 
 function AddFood(props) {

@@ -1,63 +1,61 @@
-import "./assets/css/bootstrap.min.css";
-import "./assets/css/now-ui-kit.css";
-//import "./assets/css/now-ui-kit.min.css";
-//import "./assets/css/now-ui-kit.css.map";
-import "./assets/css/demo.css";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+
 import Navbar from "./components/Navbar";
-import HomePage from "./pages/HomePage";
-import EventListPage from "./pages/EventListPage";
-import EventDetailsPage from "./pages/EventDetailsPage";
-import EditEventPage from "./pages/EditEventPage";
-import UserProfilePage from "./pages/UserProfilePage";
-import SignupPage from "./pages/SignupPage";
-import LoginPage from "./pages/LoginPage";
-import Settings from "./pages/Settings";
-import Rsvp from "./pages/Rsvp";
+import Landing from "./pages/LandingPage";
+
+//Invitation
+import InvitationTemplate from "./pages/Invitation/InvitationTeamplate";
+import Invitation from "./pages/Invitation/Invitation";
+
+//Event
+import CreateEvent from "./pages/Event/CreateEvent";
+import EditEvent from "./pages/Event/EditEvent";
+
+//Food
+import FoodDetails from "./pages/Event/Food/FoodDetails";
+import FoodList from "./pages/Event/Food/FoodList";
+
+//Guests
+import GuestDetails from "./pages/Event/Guests/GuestDetails";
+import EditGuest from "./pages/Event/Guests/EditGuest";
+import GuestList from "./pages/Event/Guests/GuestList";
+
+//Auth
+import SignupPage from "./pages/authorisation/SignupPage";
+import LoginPage from "./pages/authorisation/LoginPage";
+
+//Middleware
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
+
+//Settings
+import Settings from "./pages/Settings";
 
 function App() {
   return (
     <div className="App">
-  
-  <Navbar />
-      <Routes>      
-        <Route path="/" element={<HomePage />} />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Landing />} />
 
-        <Route
-          path="/userProfile"
-          element={ <IsPrivate> <UserProfilePage /> </IsPrivate> } 
-        />
+        <Route path="/invitation" element={<Invitation />} />
+        <Route path="/templates" element={<InvitationTemplate />} />
 
-        <Route
-          path="/events"
-          element={ <IsPrivate> <EventListPage /> </IsPrivate> } 
-        />
+        <Route path="/createevent" element={<CreateEvent />} />
+        <Route path="/event/edit/:eventId" element={<EditEvent />} />
 
-        <Route
-          path="/events/:eventId"
-          element={ <IsPrivate> <EventDetailsPage /> </IsPrivate> }
-        />
+        <Route path="/foods" element={<FoodList />} />
+        <Route path="/foods/:foodId" element={<FoodDetails />} />
 
-        <Route
-          path="/events/edit/:eventId"
-          element={ <IsPrivate> <EditEventPage /> </IsPrivate> } 
-        />
+        <Route path="/guests" element={<GuestList />} />
+        <Route path="/guests/:guestId" element={<GuestDetails />} />
+        <Route path="/guest/edit/:guestId" element={<EditGuest />} />
 
-<Route
-          path="/settings"
-          element={ <IsPrivate> <Settings /> </IsPrivate> } 
-        />
 
-<Route
-          path="/rsvp"
-          element={ <IsPrivate> <Rsvp /> </IsPrivate> } 
-        />
-        
-        <Route path="/signup" element={<IsAnon> <SignupPage /> </IsAnon>} />
-        <Route path="/login" element={<IsAnon> <LoginPage /> </IsAnon>} />
+        <Route path="/settings" element={<IsAnon> <Settings /> </IsAnon> } />
+        <Route path="/signup" element={ <IsAnon> <SignupPage />  </IsAnon> }  />
+        <Route path="/login" element={ <IsAnon> <LoginPage /> </IsAnon>  } />
 
       </Routes>
     </div>
